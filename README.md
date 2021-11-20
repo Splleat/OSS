@@ -24,7 +24,7 @@
 
 * **longopts** : long 옵션을 정의하는 문자
 
-* **progname** : 오류 발생 시 리포팅할 프로그램 명칭(현재 쉘 스크립트 파일명)으로, 잘 사용되지 않음
+* **progname** : 오류 발생 시 리포팅할 프로그램 명칭(현재 쉘 스크립트 파일명)으로, 잘 사용되지 않는다.
 
 * **parameters** : 옵션에 해당하는 실제 명령 구문
 
@@ -231,12 +231,12 @@ Kang	20200006	1.97
 ```
 ***
 
-`sed -n '/Kim/p' Student_Data.txt` : "Kim"이 포함된 줄 출력
+`sed -n '/Kim/p' Student_Data.txt` : "Kim"이 포함된 줄을 출력한다.
 ```
 Kim     20200001        3.26
 ```
 ***
-`sed -n '/Kim/,/Jeong/p' Student_Data.txt` : "Kim"과 "Jeong" 사이의 모든 줄 출력
+`sed -n '/Kim/,/Jeong/p' Student_Data.txt` : "Kim"과 "Jeong" 사이의 모든 줄을 출력한다.
 ```
 Kim     20200001        3.26
 Park    20200002        2.84
@@ -244,7 +244,7 @@ Jeong   20200003        4.32
 ```
 ***
 
-`sed '$d' Student_Data.txt` : 마지막 줄을 제외한 나머지를 출력
+`sed '$d' Student_Data.txt` : 마지막 줄을 제외한 나머지를 출력한다.
 ```
 Kim     20200001        3.26
 Park    20200002        2.84
@@ -254,7 +254,7 @@ Lee     20200005        4.23
 ```
 ***
 
-`sed 's/2020/2021/' Student_Data.txt` : 2020을 2021로 치환
+`sed 's/2020/2021/' Student_Data.txt` : 2020을 2021로 치환한다.
 ```
 Kim     20210001        3.26
 Park    20210002        2.84
@@ -313,7 +313,7 @@ Lee	20200005	4.23
 Kang	20200006	1.97
 ```
 ***
-`awk '{ print $1 }' ./Student_Data.txt` : 첫번째 열 출력
+`awk '{ print $1 }' ./Student_Data.txt` : 첫번째 열을 출력한다.
 ```
 Kim
 Park
@@ -323,12 +323,12 @@ Lee
 Kang
 ```
 ***
-`awk '/Kang/' ./Student_Data.txt` : "Kang"이 포함되어 있는 레코드 출력
+`awk '/Kang/' ./Student_Data.txt` : "Kang"이 포함되어 있는 레코드를 출력한다.
 ```
 Kang	20200006	1.97
 ```
 ***
-`awk '{ print ("name : " $1, ", ", "student_ID : " $2) }' ./Student_Data.txt` : 이름과 학번을 명시적으로 나타냄
+`awk '{ print ("name : " $1, ", ", "student_ID : " $2) }' ./Student_Data.txt` : 이름과 학번을 명시적으로 나타낸다.
 ```
 name : Kim ,  student_ID : 20200001
 name : Park ,  student_ID : 20200002
@@ -338,7 +338,7 @@ name : Lee ,  student_ID : 20200005
 name : Kang ,  student_ID : 20200006
 ```
 ***
-`awk '{ if ( $3 >= 3 ) print ($0) }' ./Student_Data.txt` : 학점이 3이 넘는 레코드만 출력
+`awk '{ if ( $3 >= 3 ) print ($0) }' ./Student_Data.txt` : 학점이 3이 넘는 레코드만 출력한다.
 ```
 Kim     20200001        3.26
 Jeong   20200003        4.32
@@ -362,7 +362,7 @@ Lee	20200005	4.23
 Kang	20200006	1.97
 ```
 ***
-`awk 'BEGIN{OFS=" | "}{print $1, $2, $3}' ./Student_Data.txt` : "|"로 이름과 학번, 학점을 구분
+`awk 'BEGIN{OFS=" | "}{print $1, $2, $3}' ./Student_Data.txt` : "|"로 이름과 학번, 학점을 구분한다.
 ```
 Kim | 20200001 | 3.26
 Park | 20200002 | 2.84
@@ -372,7 +372,7 @@ Lee | 20200005 | 4.23
 Kang | 20200006 | 1.97
 ```
 ***
-`awk 'BEGIN{s=0}{s=s+$3}END{print s/6}' ./Student_Data.txt` : 학점의 평균값을 출력
+`awk 'BEGIN{s=0}{s=s+$3}END{print s/6}' ./Student_Data.txt` : 학점의 평균값을 출력한다.
 ```
 3.37
 ```
