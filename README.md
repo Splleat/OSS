@@ -14,7 +14,7 @@
 
 * **long option**
 1. `$ command --help`와 같이 두개의 하이픈(-)으로 시작한다.
-2. short 옵션과는 달리 붙여 쓸 수 없다.\
+2. short 옵션과는 달리 붙여 쓸 수 없다.
 
 ![image](https://user-images.githubusercontent.com/94677012/142723700-566004fb-d5d8-420e-a28b-dccd0f9ed743.png)
 
@@ -98,10 +98,10 @@ Color is BLACK
 #### getopt vs getopts
 ##### getopt를 사용하지 않는 이유
 1. 외부 유틸리티 프로그램이기 때문에
-2. 기본 버전은 long 옵션을 다루지 않으며 또한 내장 공간을 다루지 못하고, 공백인 인수나 공백이 포함된 인수를 처리할 수 없으며 오류 메시지의 출력을 비활성화 할 수 없음
+2. 기본 버전은 **long 옵션을 다루지 않으며** 또한 **내장 공간을 다루지 못하고**, **공백인 인수나 공백이 포함된 인수를 처리할 수 없으며** **오류 메시지의 출력을 비활성화 할 수 없음**
 3. 루프를 완벽하게 작동하기 위해서 for 루프 자체와 동일한 순서로 값을 제공해야 하며, 이 값은 제어하기가 어려움
 4. 매개변수를 표준화하는 대부분의 방법 때문에
-> getopt 사용을 고려할 수 있는 유일한 경우는 이름이 긴 하나의 변수만을 사용할 때이다.
+> getopt 사용을 고려할 수 있는 **유일한 경우**는 **이름이 긴 하나의 변수만을 사용할 때**이다.
 ##### getopt 대신 getopts를 사용하는 이유
 1. 모든 POSIX shell에서 작업하고 휴대할 수 있음
 2. "-a -b" 및 "-ab" 사용에 관대함
@@ -145,8 +145,44 @@ done
 ```
 **Input / Output**
 
-_getopt의 예시 코드와 동일_
+`./RGB.sh -r` 
+```
+Color is RED
+```
+ ***
+ `./RGB.sh -y`
+``` 
+getopt: invalid option -- 'y'
+Incorrect options
+```
 ***
+`./RGB.sh -i BLACK`
+```
+Color is BLACK
+```
+***
+
+#### Error handling
+getopts는 오류 메시지의 출력에 대해 다음의 두 가지 모드를 제공한다.
+* Vervose mode
+* Silent mode
+> 간단히 설명하면 **Vervose** 모드는 **오류 메시지를 출력**하는 모드이고, **Silent mode**는 **오류 메시지를 출력하지 않는** 모드이다.
+
+우리는 위의 예시 코드에서 존재하지 않는 옵션인 `-y`를 입력했을 때 `getopt: invalid option -- 'y'`라는 오류 메시지를 볼 수 있었다.
+
+이를 통해 getopts의 디폴트 모드는 Vervose라는 것을 알 수 있다. 그렇다면 Silent 모드로 전환하기 위해서는 어떻게 해야 할까?
+
+##### Silent mode
+getopts에서 Silent 모드를 이용하려면 option_string의 맨 앞부분에 ':'를 추가하면 된다.
+
+`while getopts rgbi: opt` -> `while getopts :rgbi: opt`
+
+이렇게 코드를 수정한 뒤, 다시 `./RGB.sh -y`를 입력한다면, 
+```
+Invalid options
+```
+
+이렇게 오류 메시지가 출력되지 않는 것을 알 수 있다.
 
 ## sed
 > sed는 Stream Editor의 약자로, 단순하고 명확한 프로그래밍 언어를 사용하여 **텍스트**를 **분석**하고 **변환**하는 Unix utility이다.
