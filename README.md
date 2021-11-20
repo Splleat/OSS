@@ -170,14 +170,14 @@ getopts는 오류 메시지의 출력에 대해 다음의 두 가지 모드를 �
 
 우리는 위의 예시 코드에서 존재하지 않는 옵션인 `-y`를 입력했을 때 `getopt: invalid option -- 'y'`라는 오류 메시지를 볼 수 있었다.
 
-이를 통해 getopts의 디폴트 모드는 Vervose라는 것을 알 수 있다. 그렇다면 Silent 모드로 전환하기 위해서는 어떻게 해야 할까?
+이를 통해 getopts의 **디폴트 모드**는 **Vervose**라는 것을 알 수 있다. 그렇다면 Silent 모드로 전환하기 위해서는 어떻게 해야 할까?
 
 ##### Silent mode
 getopts에서 Silent 모드를 이용하려면 option_string의 맨 앞부분에 ':'를 추가하면 된다.
 
 `while getopts rgbi: opt` -> `while getopts :rgbi: opt`
 
-이렇게 코드를 수정한 뒤, 다시 `./RGB.sh -y`를 입력한다면, 
+이렇게 코드를 수정한 뒤, 다시 `./RGB.sh -y`를 입력하면, 
 ```
 Invalid options
 ```
@@ -189,13 +189,13 @@ Invalid options
 >> 일반 텍스트의 문자열 조작과 스트림 편집을 위한 대표적인 대체 툴로는 **AWK**와 **Perl**이 있다.
 
 #### sed의 특징
-1. 비 대화형 편집기로, vi편집기처럼 직접 파일을 열어 고치지 않고도 원하는 부분만 변경할 수 있다.
-2. 쉘 리다이렉션을 이용하여 편집 결과를 저장하기 전까지는 원본 파일이 변경되지 않는다.
+1. 비 대화형 편집기로, vi편집기처럼 직접 파일을 열어 고치지 않고도 명령어로 편집기처럼 원하는 부분만 변경할 수 있다.
+2. 쉘 리다이렉션을 이용하여 **편집 결과를 저장하기 전까지는 원본 파일이 변경되지 않는다.**
 3. 쉘 스크립트에서 파이프('|')와 같이 사용될 수 있다.
 4. 패턴 버퍼(Pattern Buffer)와 홀드 버퍼(Hold Buffer)라는 두 개의 임시 저장 공간을 사용한다.
 
 #### sed의 Syntax
-`sed [option] command fileName
+`sed [option] <command> fileName`
 **option**
 * -e : sed 사용 시 출력되는 값을 보여줌. 기본값으로 설정되어 있으나, 다중 명령어 사용 시 반드시 사용 필요
 * -n : 특정 값이 있는 줄만 출력. 주로 서브 명령어 p와 사용
@@ -293,7 +293,7 @@ Kang    20210006        1.97
 이 외에도 match, split, printf, systime, mktime 등 존재
 
 #### AWK의 Syntax
-`awk '<pattern> {action} ./fileName`
+`awk [option] '<pattern> {action} ./fileName`
 * pattern과 action을 정의하여 fileName의 데이터를 가공하여 출력
 * pattern과 action 중 하나만 정의해도 됨
 
