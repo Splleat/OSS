@@ -8,17 +8,15 @@
 #### option의 종류와 특징
 * **short option**
 1. `ls -a`, `ls -lh`와 같이 하나의 하이픈(-)으로 시작하면서 `$ command -a -b -c`의 형태를 가지고 있다.
- 
 2. `$ command -abc`, `$command -b -ac`와 같이 붙여서 사용하거나 순서가 바뀌어도 된다.
-
 3. `$ command -a nnn -b -c mmm`와 같이 nnn, mmm부분과 같은 옵션 인수(argument)를 가질 수 있으며, `$ command -annn`처럼 옵션 인수를 옵션에 붙여 쓸 수 있다.
-
 4. `$ command -a -b -- -c`와 같이 옵션구분자 '--'가 올 경우 우측에 있는 값은 옵션으로 해석할 수 없다.
 
 * **long option**
 1. `$ command --help`와 같이 두개의 하이픈(-)으로 시작한다.
+2. short 옵션과는 달리 붙여 쓸 수 없다.\
 
-2. short 옵션과는 달리 붙여 쓸 수 없다.
+![image](https://user-images.githubusercontent.com/94677012/142723700-566004fb-d5d8-420e-a28b-dccd0f9ed743.png)
 
 #### getopt의 기본 형태
 `getopt -o | --options <shortopts> [-l | --longoptions <longopts을 정의하는 문자>] [-n | --name progname] [--] parameters`
@@ -37,56 +35,59 @@
 
 3. `getopt -o a: -l help,path:,name: -- "$@"` : 명령의 마지막에는 하이픈(-) 두 개와 옵션에 해당하는 실제 파라미터를 입력한다. 보통 모든 파라미터를 나타내는 **"$@"** 를 자주 이용한다.
 ***
-> **Example Code**
-> ```
-> # RGB.sh
-> 
-> #!/bin/bash
->
-> opts=$(getopt -o rgb -l color: -- "$@")
-> 
-> [ $? -eq 0 ] || {
-> 	echo "Incorrect options."
-> 	exit 1
-> }
-> 
-> eval set -- "$opts"
-> 
-> while true
-> do
-> 	case "$1" in
-> 	-r)
-> 		echo "Color is RED"
-> 		;;
-> 	-g)
-> 		echo "Color is GREEN"
-> 		;;
-> 	-b)
-> 		echo "Color is BLUE"
-> 		;;
-> 	--color)
-> 		echo "Color is $2"
-> 		;;
-> 	--)
-> 		shift
-> 		break
-> 		;;
-> 	esac
-> 	shift
-> done
-> ```
-> **Input / Output**
-> 
-> `./RGB.sh -r` 
->> _Color is RED_
->
-> `./RGB.sh -y`
->> _getopt: invalid option -- 'y'_
->>
->> _Incorrect options_
-> 
-> `./RGB.sh --color BLACK`
->> _Color is BLACK_  
+**Example Code**
+```
+# RGB.sh
+
+#!/bin/bash
+
+opts=$(getopt -o rgb -l color: -- "$@")
+ 
+[ $? -eq 0 ] || {
+	echo "Incorrect options."
+	exit 1
+}
+
+eval set -- "$opts"
+ 
+while true
+do
+	case "$1" in
+	-r)
+		echo "Color is RED"
+		;;
+	-g)
+		echo "Color is GREEN"
+		;;
+	-b)
+		echo "Color is BLUE"
+		;;
+	--color)
+		echo "Color is $2"
+		;;
+	--)
+		shift
+ 		break
+		;;
+	esac
+	shift
+done
+```
+**Input / Output**
+
+`./RGB.sh -r` 
+
+ _Color is RED_
+ 
+ `./RGB.sh -y`
+ 
+ _getopt: invalid option -- 'y'_
+
+ _Incorrect options_
+
+`./RGB.sh --color BLACK`
+
+ _Color is BLACK_  
 ***
 
 ### getopts
@@ -108,7 +109,6 @@
 `getopts <option_string> varname`
 * **option_string** : 옵션을 정의하는 문자로, getopt와 동일
 * **varname** : 옵션 명을 받을 변수, OPTARG 변수에는 실제 옵션의 값이 세팅
-* 
 
 ##### 예시
 `getopt a:b:c:d opt`
@@ -143,7 +143,7 @@ done
 ```
 **Input / Output**
 
-_getopt와 동일_
+_getopt의 예시 코드와 동일_
 ***
 
 ### sed
