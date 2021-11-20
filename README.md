@@ -1,5 +1,5 @@
 # OSS
-### getopt
+## getopt
 > 유닉스/POSIX 스타일의 **명령줄 옵션(command-line options)을 분석**하는 데 사용되는 C 라이브러리 함수로, 쉘 스크립트에서 명령줄 인수를 구문 분석하기 위한 유닉스 프로그램의 이름이기도 하다.
 >> **command-line options** : **프로그램에 매개 변수를 전달하는 데 사용되는 명령어**들로, 인터페이스에서 다양한 설정을 변경하거나 명령어들을 실행하기 위한 신호를 전달하는 역할을 수행
 >>
@@ -76,21 +76,23 @@ done
 **Input / Output**
 
 `./RGB.sh -r` 
-
- _Color is RED_
- 
+```
+Color is RED
+```
+ ***
  `./RGB.sh -y`
- 
- _getopt: invalid option -- 'y'_
-
- _Incorrect options_
-
+``` 
+getopt: invalid option -- 'y'
+Incorrect options
+```
+***
 `./RGB.sh --color BLACK`
-
- _Color is BLACK_  
+```
+Color is BLACK
+```
 ***
 
-### getopts
+## getopts
 > **명령줄 인수(command-line arguments)를 분석하기 위해 기본 제공되는 Unix shell 명령어**로, getopts는 getopt의 C 인터페이스에 기반을 둔 POSIX 유틸리티 문법 가이드라인을 따르는 명령줄 인수를 처리하도록 설계되었다.
 
 #### getopt vs getopts
@@ -146,7 +148,7 @@ done
 _getopt의 예시 코드와 동일_
 ***
 
-### sed
+## sed
 > sed는 Stream Editor의 약자로, 단순하고 명확한 프로그래밍 언어를 사용하여 **텍스트**를 **분석**하고 **변환**하는 Unix utility이다.
 >> 일반 텍스트의 문자열 조작과 스트림 편집을 위한 대표적인 대체 툴로는 **AWK**와 **Perl**이 있다.
 
@@ -190,4 +192,84 @@ _getopt의 예시 코드와 동일_
 
 `sed 's/coffee/milk/p` fileName : fileName의 coffee를 milk로 치환
 
-### awk
+## AWK
+> AWK(Aho Weinberger Kernighan)는 개발자들의 성의 앞글자를 따서 붙여진 이름으로, 유닉스에서 처음 개발된 **텍스트를 처리하기 위한 일반 스크립트 언어**이다.
+>> 스크립트 언어 : 응용 소프트웨어를 제어하는 컴퓨터 프로그래밍 언어
+>> 
+> ||$1|$2|$3|
+> |:---:|:---:|:---:|:---:|
+> |$0|a|b|c|
+> ||d|e|f|
+> ||g|h|i|
+> 
+> AWK는 모든 자료를 **레코드(Record)** 와 **필드(Field)** 로 구분하는데, 위 표의 행($0)이 레코드에 해당하고 열($1, $2, $3)이 필드에 해당한다.
+>> abc를 포함하는 1행이 첫번째 레코드, def를 포함하는 2행이 두번째, ghi를 포함하는 3행이 세번째 레코드이다.
+>> 
+>> adg를 포함하는 1열이 첫번째 필드, beh를 포함하는 2열이 두번째, cfi를 포함하는 3열이 세번째 필드이다.
+
+#### AWK의 option
+* -F : 필드 구분 문자 지정
+* -f : AWK program 파일 경로 지정
+* -v : AWK program에서 사용될 특정 변수 값 지정
+
+#### AWK의 내장 함수
+|함수|설명|
+|--------------------|-------------------------------|
+|sub(a, b)|a를 b로 치환|
+|gsub(a, b)|모든 a를 b로 치환|
+|index(str, substr)|str에 대해 substr의 index 반환|
+|length(str)|str의 길이 반환|
+|substr(str, start, [length])|str에 대해 start부터 length까지의 길이 반환|
+
+이 외에도 match, split, printf, systime, mktime 등 존재
+
+#### AWK의 Syntax
+`awk '<pattern> {action} ./fileName`
+* pattern과 action을 정의하여 fileName의 데이터를 가공하여 출력
+* pattern과 action 중 하나만 정의해도 됨
+
+##### 예시
+```
+# Student_Data.txt
+
+Kim	20200001	3.26
+Park	20200002	2.84
+Jeong	20200003	4.32
+Nam	20200004	3.6
+Lee	20200005	4.23
+Kang	20200006	1.97
+```
+***
+`awk '{ print $1 }' ./Student_Data.txt` : 첫번째 열 출력
+```
+Kim
+Park
+Jeong
+Nam
+Lee
+Kang
+```
+***
+`awk '/Kang/' ./Student_Data.txt` : "Kang"이 포함되어 있는 레코드 출력
+```
+Kang	20200006	1.97
+```
+***
+`awk '{ print ("name : " $1, ", ", "student_ID : " $2) }' ./Student_Data.txt` : 이름과 학번을 명시적으로 나타냄
+```
+name : Kim ,  student_ID : 20200001
+name : Park ,  student_ID : 20200002
+name : Jeong ,  student_ID : 20200003
+name : Nam ,  student_ID : 20200004
+name : Lee ,  student_ID : 20200005
+name : Kang ,  student_ID : 20200006
+```
+***
+`awk '{ if ( $3 >= 3 ) print ($0) }' ./Student_Data.txt` : 학점이 3이 넘는 레코드만 출력
+```
+Kim     20200001        3.26
+Jeong   20200003        4.32
+Nam     20200004        3.6
+Lee     20200005        4.23
+```
+***
