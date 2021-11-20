@@ -18,7 +18,7 @@
 
 ![image](https://user-images.githubusercontent.com/94677012/142723700-566004fb-d5d8-420e-a28b-dccd0f9ed743.png)
 
-#### getopt의 기본 형태
+#### getopt의 Syntax
 `getopt -o | --options <shortopts> [-l | --longoptions <longopts을 정의하는 문자>] [-n | --name progname] [--] parameters`
 * **shortopts** : short 옵션을 정의하는 문자
 
@@ -105,7 +105,7 @@ done
 2. "-a -b" 및 "-ab" 사용에 관대함
 3. 하이픈(-)을 옵션 종료자로 이해
 
-#### getopts의 기본 형태
+#### getopts의 Syntax
 `getopts <option_string> varname`
 * **option_string** : 옵션을 정의하는 문자로, getopt와 동일
 * **varname** : 옵션 명을 받을 변수, OPTARG 변수에는 실제 옵션의 값이 세팅
@@ -147,4 +147,47 @@ _getopt의 예시 코드와 동일_
 ***
 
 ### sed
+> sed는 Stream Editor의 약자로, 단순하고 명확한 프로그래밍 언어를 사용하여 **텍스트**를 **분석**하고 **변환**하는 Unix utility이다.
+>> 일반 텍스트의 문자열 조작과 스트림 편집을 위한 대표적인 대체 툴로는 **AWK**와 **Perl**이 있다.
+
+#### sed의 특징
+1. 비 대화형 편집기로, vi편집기처럼 직접 파일을 열어 고치지 않고도 원하는 부분만 변경할 수 있다.
+2. 쉘 리다이렉션을 이용하여 편집 결과를 저장하기 전까지는 원본 파일이 변경되지 않는다.
+3. 쉘 스크립트에서 파이프(|)와 같이 사용될 수 있다.
+4. 패턴 버퍼(Pattern Buffer)와 홀드 버퍼(Hold Buffer)라는 두 개의 임시 저장 공간을 사용한다.
+
+#### sed의 Syntax
+`sed [option] command fileName
+**option**
+* -e : sed 사용 시 출력되는 값을 보여줌. 기본값으로 설정되어 있으나, 다중 명령어 사용 시 반드시 사용 필요
+* -n : 특정 값이 있는 줄만 출력. 주로 서브 명령어 p와 사용
+* -f : 스크립트를 파일로부터 읽어들이며 명령어를 지정 
+* -i : 변경되는 값을 출력 없이 원본 파일에 바로 적용
+
+**subcommand** : p, d, s가 가장 자주 사용
+* **p : 출력**
+* **d : 삭제**
+* **s : 치환**
+* , : 범위 지정
+* r : 사용자가 지정한 줄만 읽음
+* w : 사용자가 지정한 줄을 파일에 저장
+* a : 내용 추가
+* i : 내용 삽입
+* c : 내용 변경
+* n : 다음
+* y : 변환
+* q : 종료
+* e : 다중 편집
+
+#### 예시
+`sed p fileName` : fileName의 파일 전체 출력 (=cat)
+
+`sed -n '/password/p' fileName` : fileName의 "password"가 포함된 줄을 출력
+
+`sed -n '/id/,/password' fileName` : fileName의 "id"와 "password" 사이의 모든 줄을 출력
+
+`sed '$d' fileName` : fileName의 마지막 줄을 삭제하고, 나머지 줄을 출력
+
+`sed 's/coffee/milk/p` fileName : fileName의 coffee를 milk로 치환
+
 ### awk
